@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "stage": "next start -p 5002"
   },
   "dependencies": {
     "react": "19.0.0-rc-66855b96-20241106",
