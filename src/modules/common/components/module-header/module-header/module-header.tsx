@@ -1,8 +1,9 @@
 import React, { ReactNode } from "react";
 import styles from "./module-header.module.scss";
 import Icons from "@/themes/images/icons/icons";
-import SearchBar from "../search-bar/search-bar";
+
 import ProfilePreview from "../profile-preview/profile-preview";
+import SearchBar from "@/themes/components/search-bar/search-bar";
 
 interface ModuleHeaderProps {
   title: string; // Title of the module header

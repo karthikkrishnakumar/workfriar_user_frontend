@@ -3,9 +3,10 @@ import React, { useRef, useState } from "react";
 import styles from "./profile.preview.module.scss";
 import Image from "next/image";
 import Icons from "@/themes/images/icons/icons"; // Icons import
-import DropDownModal from "../drop-down-modal/drop-down-modal";
+
 import { useRouter } from "next/navigation"; // Use useRouter from next/navigation
 import { ProfileNavigationClass } from "@/utils/navigation-util/profile-navigation-router"; // Import the ProfileNavigationClass
+import DropDownModal from "@/themes/components/drop-down-modal/drop-down-modal";
 
 interface ProfilePreviewProps {
   avatarSrc?: string; // Source for the avatar image (optional)
