@@ -1,0 +1,85 @@
+.tabsWrapper {
+
+  :global {
+    .ant-tabs {
+      .ant-tabs-nav {
+        margin: 0 !important; // Remove default margin
+        &::before {
+          border-bottom: none !important;
+        }
+
+        .ant-tabs-nav-list {
+          width: 80%;
+          display: flex;
+          align-items: center;
+          gap: 64px;
+        }
+
+        // Remove any bottom padding from nav wrapper
+        .ant-tabs-nav-wrap {
+          padding-bottom: 0;
+        }
+      }
+
+      .ant-tabs-tab {
+        display: flex;
+        justify-content: center;
+        padding: 8px 20px; 
+        margin: 0 !important; 
+        transition: all 0.3s ease;
+
+        
+        // Default state
+        .ant-tabs-tab-btn {
+          color: var(--header-font-color-light);
+          font-weight: var(--default-font-weight);
+          font-size: var(--heading-2-size);
+          transition: all 0.3s ease;
+          position: relative;
+        }
+        
+        // Hover state
+        &:hover {
+          .ant-tabs-tab-btn {
+            color: var(--primary-font-color-dark);
+            font-weight: var(--sub-heading-font-weight);
+          }
+        }
+        
+        // Active/Selected state
+        &.ant-tabs-tab-active {
+          .ant-tabs-tab-btn {
+            color: var(--primary-font-color-dark) !important;
+            font-weight: var(--sub-heading-font-weight) !important;
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%; 
+            height: 2px;
+            background-color: var(--primary-golden-color-dark);
+            z-index: 2;
+          }
+        }
+      }
+//give me a nextjs reusable component that is a header underline .in this header underline different other header components comes so basically this component is just a header underline that comes just below the components ,for example the tabs can come on top of this underline  
+
+      // Remove space between content and nav
+      .ant-tabs-content-holder {
+        margin-top: 0;
+      }
+
+      // Remove default ink bar
+      .ant-tabs-ink-bar {
+        display: none;
+      }
+    }
+  }
+}
+
+.tabs {
+  display: block; 
+}
