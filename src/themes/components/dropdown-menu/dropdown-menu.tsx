@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Dropdown as AntDropdown} from "antd";
+import React, { useState, useEffect, useCallback } from "react";
+import { Dropdown } from "antd";
 import styles from "./dropdown-menu.module.scss";
 
 interface MenuItem {
@@ -12,9 +12,9 @@ interface MenuItem {
 
 interface DropdownProps {
   menuItems: MenuItem[];
-  trigger?: ("click" | "hover" | "contextMenu")[]; // Dropdown trigger events
-  icon?: React.ReactNode; // Custom icon for the trigger
-  wrapperClassName?: string; // Custom class for the trigger wrapper
+  trigger?: ("click" | "hover" | "contextMenu")[];
+  icon?: React.ReactNode;
+  wrapperClassName?: string;
 }
 
 const DropdownMenu: React.FC<DropdownProps> = ({
@@ -23,8 +23,37 @@ const DropdownMenu: React.FC<DropdownProps> = ({
   icon,
   wrapperClassName = "",
 }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpenChange = (visible: boolean) => {
+    setOpen(visible);
+    console.log("Dropdown open state changed:", visible);
+  };
+
+  const handleScroll = useCallback(() => {
+    if (open) {
+
+      setOpen(false);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    
+    // Only add listener if dropdown is open
+    if (open) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [open, handleScroll]);
+
   return (
-    <AntDropdown
+    <Dropdown
+      open={open}
+      onOpenChange={handleOpenChange}
       trigger={trigger}
       menu={{
         items: menuItems.map((item) => ({
@@ -37,7 +66,7 @@ const DropdownMenu: React.FC<DropdownProps> = ({
       <div className={`${styles.triggerWrapper} ${wrapperClassName}`}>
         {icon}
       </div>
-    </AntDropdown>
+    </Dropdown>
   );
 };
 

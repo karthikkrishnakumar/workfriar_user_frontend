@@ -64,6 +64,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({ data }) => {
               label: "Details",
               onClick: () => handleMenuClick("details", record),
             },
+            
           ]}
           icon={Icons.threeDots}
         />
