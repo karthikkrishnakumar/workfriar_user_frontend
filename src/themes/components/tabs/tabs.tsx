@@ -1,38 +1,41 @@
-import React, { Ref } from 'react';
-import { Tabs as AntTabs, TabsProps as AntTabsProps } from "antd";
+"use client";
+import React, { ReactNode } from "react";
 import styles from "./tabs.module.scss";
+import { Tabs } from "antd";
+import type { TabsProps } from "antd";
 
-interface TabItem {
-  key: string;
-  label: string;
-  children?: React.ReactNode;
+interface TabComponentProps {
+  headings: { key: string; label: string | ReactNode; content: React.ReactNode }[]; // Array of headings and content
+  onChange?: (key: string) => void;
+  subHeading?: ReactNode;
+  activeKey?: string;
 }
 
-interface TabsProps extends Omit<AntTabsProps, 'items'> {
-  items: TabItem[];
-  className?: string;
-}
-
-const Tabs: React.FC<TabsProps> = ({ 
-  items, 
-  className, 
-  ...restProps 
+/**
+ * A reusable tab component that dynamically renders Ant Design tabs.
+ * @param {TabComponentProps} props - Props for the TabComponent
+ * @returns {JSX.Element} The rendered TabComponent
+ */
+const TabComponent: React.FC<TabComponentProps> = ({
+  headings,
+  onChange,
+  subHeading,
+  activeKey,
 }) => {
-  const tabItems = items.map(item => ({
-    key: item.key,
-    label: item.label,
-    children: item.children || null,
+  // Map headings into TabItems format for Ant Design
+  const tabItems: TabsProps["items"] = headings.map((heading) => ({
+    key: heading.key,
+    label: <div className={styles.labelWrapper}>{heading.label}</div>,
+    children: heading.content, // Content to render inside the tab
   }));
 
-  return (
-    <div className={`${styles.tabsWrapper} ${className || ""}`.trim()}>
-      <AntTabs
-        {...restProps}
-        items={tabItems}
-        className={styles.tabs}
-      />
+  return(
+  <div className={styles.tabWrapper}>
+    <div className={styles.subHeading}>
+      {subHeading}
     </div>
-  );
+    <Tabs items={tabItems} className={styles.customTabs} onChange={onChange} activeKey={activeKey}/>
+  </div>);
 };
 
-export default Tabs;
+export default TabComponent;

@@ -24,7 +24,7 @@ const Table: React.FC<TableProps> = ({
   dataSource,
   loading = false,
   className,
-  maxHeight = 426, 
+  maxHeight = 450, 
 }) => {
   const formattedColumns = columns.map((column) => ({
     ...column,

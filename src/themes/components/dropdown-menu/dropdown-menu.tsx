@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { Dropdown } from "antd";
+import type { MenuProps } from "antd";
 import styles from "./dropdown-menu.module.scss";
 
 interface MenuItem {
@@ -15,6 +16,8 @@ interface DropdownProps {
   trigger?: ("click" | "hover" | "contextMenu")[];
   icon?: React.ReactNode;
   wrapperClassName?: string;
+  dropdownClassName?: string;
+  minWidth?: string; // New prop for inline min-width
 }
 
 const DropdownMenu: React.FC<DropdownProps> = ({
@@ -22,46 +25,45 @@ const DropdownMenu: React.FC<DropdownProps> = ({
   trigger = ["click"],
   icon,
   wrapperClassName = "",
+  dropdownClassName = "",
+  minWidth = "150px", // Default minWidth value
 }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (visible: boolean) => {
     setOpen(visible);
-    console.log("Dropdown open state changed:", visible);
   };
 
   const handleScroll = useCallback(() => {
     if (open) {
-
       setOpen(false);
     }
   }, [open]);
 
   useEffect(() => {
-    
-    // Only add listener if dropdown is open
     if (open) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-
+      window.addEventListener("scroll", handleScroll, { passive: true });
 
       return () => {
-        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener("scroll", handleScroll);
       };
     }
   }, [open, handleScroll]);
+
+  // Define menu with custom className for hover effect
+  const menu: MenuProps = {
+    items: menuItems,
+    className: styles.customMenu, 
+  };
 
   return (
     <Dropdown
       open={open}
       onOpenChange={handleOpenChange}
       trigger={trigger}
-      menu={{
-        items: menuItems.map((item) => ({
-          key: item.key,
-          label: item.label,
-          onClick: item.onClick,
-        })),
-      }}
+      overlayClassName={`${styles.dropdownMenuOverlay} ${dropdownClassName}`}
+      overlayStyle={{ minWidth }}
+      menu={menu}
     >
       <div className={`${styles.triggerWrapper} ${wrapperClassName}`}>
         {icon}

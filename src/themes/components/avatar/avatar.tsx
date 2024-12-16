@@ -1,51 +1,50 @@
 "use client";
+import React from 'react';
+import { Avatar as AntAvatar } from 'antd';
+import { AvatarProps } from 'antd/es/avatar';
 
-import React from "react";
-import { Avatar as AntAvatar } from "antd";
-import styles from "./avatar.module.scss";
-
-interface CustomAvatarProps {
-  initial?: string; // Initials to display in the avatar
-  backgroundColor?: string; // Background color of the avatar
-  textColor?: string; // Text color of the initials
-  borderColor?: string; // Border color of the avatar
-  size?: number | "small" | "large" | "default"; // Avatar size
-  shape?: "circle" | "square"; // Avatar shape
-  className?: string; // Custom class for additional styling
-  style?: React.CSSProperties; // Inline styles for customization
-  icon?: React.ReactNode; // Icon to display in the avatar
-  src?: string; // Source URL for the avatar image
+interface CustomAvatarProps extends AvatarProps {
+  name?: string;
+  profile?:string
 }
 
-const Avatar: React.FC<CustomAvatarProps> = ({
-  initial,
-  backgroundColor,
-  textColor,
-  borderColor,
-  size = "default",
-  shape = "circle",
-  className,
-  style,
-  icon,
-  src,
+const CustomAvatar: React.FC<CustomAvatarProps> = ({ 
+  name, 
+  profile,
+  src, 
+  style, 
+  size = 40, 
+  ...restProps 
 }) => {
+  // If no image is provided, generate an avatar with the first letter
+  if (!src && name) {
+    return (
+      <AntAvatar 
+        style={{
+          backgroundColor: '#FFE3B8',
+          color: '#000000',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          ...style
+        }}
+        size={size}
+        {...restProps}
+      >
+        {name.charAt(0).toUpperCase()}
+      </AntAvatar>
+    );
+  }
+
+  // If image is provided, render with the image
   return (
-    <AntAvatar
-      className={`${styles.avatar} ${className || ""}`}
-      size={size}
-      shape={shape}
-      icon={icon}
+    <AntAvatar 
       src={src}
-      style={{
-        backgroundColor: backgroundColor || undefined,
-        color: textColor || undefined,
-        borderColor: borderColor || undefined,
-        ...style, // Merge custom inline styles
-      }}
-    >
-      {initial}
-    </AntAvatar>
+      size={size}
+      style={style}
+      {...restProps}
+    />
   );
 };
 
-export default Avatar;
+export default CustomAvatar;

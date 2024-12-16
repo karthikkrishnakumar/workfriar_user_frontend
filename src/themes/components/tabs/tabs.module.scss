@@ -1,85 +1,119 @@
-.tabsWrapper {
+.tabWrapper{
+    position: relative;
+}
 
-  :global {
-    .ant-tabs {
-      .ant-tabs-nav {
-        margin: 0 !important; // Remove default margin
-        &::before {
-          border-bottom: none !important;
-        }
+.subHeading{
+    position: absolute;
+    right: 25px;
+    top: 15px;
+}
 
-        .ant-tabs-nav-list {
-          width: 80%;
-          display: flex;
-          align-items: center;
-          gap: 64px;
-        }
 
-        // Remove any bottom padding from nav wrapper
-        .ant-tabs-nav-wrap {
-          padding-bottom: 0;
-        }
-      }
+.customTabs:global(.ant-tabs .ant-tabs-tab+.ant-tabs-tab){
+    @media(max-width:890px){
+        margin: 0 0 0 15px;
+    }
+}
 
-      .ant-tabs-tab {
+.customTabs:global(.ant-tabs >.ant-tabs-nav){
+    width: max-content !important;
+}
+
+.customTabs:global(.ant-tabs-nav-wrap ){
+    width: max-content !important;
+}
+
+.customTabs:global(.ant-tabs-nav-list){
+    font-size: var(--heading-2-size);
+    font-weight: var(--default-font-weight);
+    width: max-content !important;
+
+    @media(max-width:890px){
+        font-size: var(--default-font-size);
+    }
+}
+
+
+
+// color of active tab's font
+.customTabs:global(.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn){
+    color: var(--primary-font-color-dark);
+    font-size: var(--heading-2-size);
+    font-weight: var(--sub-heading-font-weight);
+    transition: all 0.4s ease !important;
+
+    @media(max-width:890px){
+        font-size: var(--default-font-size);
+    }
+}
+
+// color of active tab's underline
+.customTabs:global(.ant-tabs .ant-tabs-ink-bar){
+    background-color: var(--primary-golden-color-dark);
+}
+
+
+.customTabs:global(.ant-tabs >.ant-tabs-nav .ant-tabs-nav-list){
+    transform: none !important;
+}
+
+.customTabs:global(.ant-tabs .ant-tabs-tab-btn:active){
+    color: var(--primary-font-color-dark) !important;
+    font-weight: var(--sub-heading-font-weight) !important;
+}
+
+// color of tab's font when not active
+.customTabs:global(.ant-tabs .ant-tabs-tab-btn){
+    color: var(--grey-font-color);
+    font-size: var(--heading-2-size);
+    font-weight: var(--default-font-weight);
+    transition: all 0.4s ease !important;
+    outline: none;
+
+    @media(max-width:890px){
+        font-size: var(--default-font-size);
+    }
+}
+
+.labelWrapper{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 5px;
+}
+
+.labelWrapper span{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--disabled-count-background);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media(max-width:890px){
+        width: 18px;
+        height: 18px;
+    }
+
+    p{
+        font-size: 13px;
+        font-weight: var(--default-font-size);
         display: flex;
         justify-content: center;
-        padding: 8px 20px; 
-        margin: 0 !important; 
-        transition: all 0.3s ease;
-
-        
-        // Default state
-        .ant-tabs-tab-btn {
-          color: var(--header-font-color-light);
-          font-weight: var(--default-font-weight);
-          font-size: var(--heading-2-size);
-          transition: all 0.3s ease;
-          position: relative;
-        }
-        
-        // Hover state
-        &:hover {
-          .ant-tabs-tab-btn {
-            color: var(--primary-font-color-dark);
-            font-weight: var(--sub-heading-font-weight);
-          }
-        }
-        
-        // Active/Selected state
-        &.ant-tabs-tab-active {
-          .ant-tabs-tab-btn {
-            color: var(--primary-font-color-dark) !important;
-            font-weight: var(--sub-heading-font-weight) !important;
-          }
-
-          &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%; 
-            height: 2px;
-            background-color: var(--primary-golden-color-dark);
-            z-index: 2;
-          }
-        }
-      }
-//give me a nextjs reusable component that is a header underline .in this header underline different other header components comes so basically this component is just a header underline that comes just below the components ,for example the tabs can come on top of this underline  
-
-      // Remove space between content and nav
-      .ant-tabs-content-holder {
-        margin-top: 0;
-      }
-
-      // Remove default ink bar
-      .ant-tabs-ink-bar {
-        display: none;
-      }
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: max-content;
     }
-  }
 }
 
-.tabs {
-  display: block; 
+.customTabs:global(.ant-tabs .ant-tabs-tab.ant-tabs-tab-active) .labelWrapper span {
+    background-color: var(--active-count-background);
+    color: var(--primary-golden-color-dark);
+
 }
+
+

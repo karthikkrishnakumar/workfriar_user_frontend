@@ -1,90 +1,88 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./date-picker.module.scss";
 import Icons from "@/themes/images/icons/icons";
+import { formatDate ,formatYear } from "@/utils/datepicker-util/datepicker-formater-routes";
 
 interface DateRangePickerProps {
-  initialStartDate?: Date;
-  initialEndDate?: Date;
-  onDateChange: (startDate: Date, endDate: Date) => void;
+  range: string; // The range in "YYYY-MM-DD-YYYY-MM-DD" format
+  onDateChange: (data: {
+    startDate: string;
+    endDate: string;
+    prev: boolean;
+    next: boolean;
+  }) => void;
+  isPrev?: boolean; // True if the previous button should be disabled
+  isNext?: boolean; // True if the next button should be disabled
 }
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
 const DateRangePicker: React.FC<DateRangePickerProps> = ({
-  initialStartDate,
-  initialEndDate,
+  range,
   onDateChange,
+  isPrev=false,
+  isNext=false,
 }) => {
-  const [currentWeek, setCurrentWeek] = useState(0);
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
 
-  // Calculate the week range based on the offset
-  const getWeekDates = (weekOffset: number) => {
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay() + 1 + weekOffset * 7);
+  // Parse and set the initial range
+  useEffect(() => {
+    const rangePattern = /^\d{4}-\d{2}-\d{2}-\d{4}-\d{2}-\d{2}$/;
 
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 4);
+    if (!rangePattern.test(range)) {
+      console.error("Invalid range format. Expected 'YYYY-MM-DD-YYYY-MM-DD'");
+      return;
+    }
 
-    return { startOfWeek, endOfWeek };
+    const parts = range.split("-");
+    const start = parts.slice(0, 3).join("-"); // First part of the range
+    const end = parts.slice(3, 6).join("-"); // Second part of the range
+
+    setStartDate(start);
+    setEndDate(end);
+  }, [range]);
+
+  // Handle navigation (Previous or Next)
+  const handleNavigation = (isPrev: boolean) => {
+    if (startDate && endDate) {
+      onDateChange({
+        startDate,
+        endDate,
+        prev: isPrev,
+        next: !isPrev,
+      });
+    }
   };
-
-  // Format the date as "Oct 14"
-  const formatDate = (date: Date) =>
-    `${months[date.getMonth()]} ${date.getDate()}`;
-
-  const handleWeekChange = (offset: number) => {
-    const newWeek = currentWeek + offset;
-    setCurrentWeek(newWeek);
-
-    const { startOfWeek, endOfWeek } = getWeekDates(newWeek);
-    onDateChange(startOfWeek, endOfWeek);
-  };
-
-  // Get the current week's dates(with conditional, get date from props?)
-  const { startOfWeek, endOfWeek } =
-    initialStartDate && initialEndDate
-      ? { startOfWeek: initialStartDate, endOfWeek: initialEndDate }
-      : getWeekDates(currentWeek);
 
   return (
     <div className={styles.dateRangePicker}>
-      {/* left navigationButton */}
+      {/* Previous Week Button */}
       <button
-        onClick={() => handleWeekChange(-1)}
+        onClick={() => handleNavigation(true)} // Previous
         className={styles.navigationButtonLeft}
+        disabled={isPrev} // Disable if isPrev is true
       >
-        {Icons.arrowRightDark}
+        {Icons.arrowLeftGrey}
       </button>
 
-      {/* date range */}
+      {/* Display the Date Range */}
       <div className={styles.weekDisplay}>
-        {`${formatDate(startOfWeek)} - ${formatDate(
-          endOfWeek
-        )}, ${startOfWeek.getFullYear()}`}
+        {startDate && endDate ? (
+          <>
+            {formatDate(startDate)} - {formatDate(endDate)},{" "}
+            {formatYear(endDate)}
+          </>
+        ) : (
+          "Loading..."
+        )}
       </div>
 
-      {/* right navigationButton */}
+      {/* Next Week Button */}
       <button
-        onClick={() => handleWeekChange(1)}
+        onClick={() => handleNavigation(false)} // Next
         className={styles.navigationButtonRight}
+        disabled={isNext} // Disable if isNext is true
       >
-        {Icons.arrowRightDark}
+        {Icons.arrowRightGrey}
       </button>
     </div>
   );
