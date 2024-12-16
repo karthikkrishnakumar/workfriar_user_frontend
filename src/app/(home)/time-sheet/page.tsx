@@ -1,9 +1,5 @@
-import React from 'react'
+import TImesheetViews from "@/modules/time-sheet/views/timesheet-view";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export default function page() {
+  return <TImesheetViews />;
 }
-
-export default page

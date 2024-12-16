@@ -1,0 +1,26 @@
+.card {
+  padding: 0px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  color: var(--primary-font-color-dark);
+}
+
+.topRight {
+  height: 100%;
+  font-size: 0.9rem;
+}
+
+.bottomContent {
+  text-align: right;
+}
