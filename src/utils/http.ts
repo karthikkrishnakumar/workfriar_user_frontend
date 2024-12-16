@@ -1,20 +1,31 @@
 import Axios, { AxiosRequestConfig } from "axios";
 
-const axiosClient = Axios.create({
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+
+const axioClient = Axios.create({
   headers: {
     "X-Requested-With": "XMLHttpRequest",
   },
-  withCredentials: true,
+  withCredentials: false,
 });
 
 const http = () => {
-
-  // post method 
+  /**
+   * HTTP POST method for API request
+   * @param url - API endpoint path
+   * @param props - Request data
+   * @param hasFile - Flag for file upload
+   * @returns Response data
+   */
   const post = async (
     url: string,
-    props?: JSON | FormData | {},
+    props?: JSON | FormData,
     hasFile?: boolean
   ) => {
+    // const fullUrl = `${url}`;
+    const fullUrl = `http://localhost:3002${url}`;
+    console.log(fullUrl)
     let config: AxiosRequestConfig = {
       headers: {
         "Content-Type": "application/json",
@@ -27,33 +38,32 @@ const http = () => {
         },
       };
     }
-
-    const response = await axiosClient
-      .post(url, props, config)
+    const response = await axioClient
+      .post(fullUrl, props, config)
       .then((response) => {
         if (response.data == undefined || response.data == "") {
           response.data = {
             status: false,
-            message: "Something went wrong.",
+            message: "server error [001]",
           };
         }
         return response;
       })
       .catch((error) => {
-        if (error.response && error.response.status === 422) {
+        if (error.response && error.response.status == 422) {
           error.response.data.status = false;
           return error.response;
         } else if (error.response) {
           error.response.data = {
             status: false,
-            message: "Something went wrong.",
+            message: "server error [010]",
           };
           return error.response;
         } else {
           return {
             data: {
               status: false,
-              message: "Something went wrong.",
+              message: "server error [100]",
             },
           };
         }
@@ -62,53 +72,7 @@ const http = () => {
     const body = response.data;
     return { response, body };
   };
-
-  // get method
-  const get = async (
-    url: string, 
-    params?: Record<string,
-    any>
-  ) => {
-    const config: AxiosRequestConfig = {
-      params,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const response = await axiosClient
-      .get(url, config)
-      .then((response) => {
-        if (response.data == undefined || response.data == "") {
-          response.data = {
-            status: false,
-            message: "Something went wrong.",
-          };
-        }
-        return response;
-      })
-      .catch((error) => {
-        if (error.response) {
-          error.response.data = {
-            status: false,
-            message: "Something went wrong.",
-          };
-          return error.response;
-        } else {
-          return {
-            data: {
-              status: false,
-              message: "Something went wrong.",
-            },
-          };
-        }
-      });
-
-    const body = response.data;
-    return { response, body };
-  };
-
-  return { post, get };
+  return { post };
 };
 
 export default http;

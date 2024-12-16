@@ -10,9 +10,8 @@ interface NavigationLinks {
 
 export class NavBarNavigationClass {
     public navigationLinks: NavigationLinks[] = [
-      { path: "/", label: "DashBoard", defaultIcon: "dashboardOutline", activeIcon: "dashboardFilled", collapsible: false },
-      { path: "/time-sheet", label: "TimeSheet", defaultIcon: "timeSheetOutline", activeIcon: "timeSheetFilled", collapsible: true },
-      { path: "/organization", label: "Organization", defaultIcon: "organizationOutline", activeIcon: "organizationFilled", collapsible: false },
+      { path: "/dashboard", label: "DashBoard", defaultIcon: "dashboardOutline", activeIcon: "dashboardFilled", collapsible: false },
+      { path: "/time-sheet", label: "TimeSheet", defaultIcon: "timeSheetOutline", activeIcon: "timeSheetFilled", collapsible: false },
     ];
   
     // Function to get the active status of the link based on the current pathname

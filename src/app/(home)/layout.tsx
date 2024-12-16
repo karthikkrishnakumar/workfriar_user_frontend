@@ -1,21 +1,20 @@
-import NavBar from "@/modules/common/components/nav-bar/nav-bar";
-import ModuleHeaderWrapper from "@/modules/common/components/module-header/module-header-wrapper/module-header-wrapper";
+import NavBar from "@/themes/components/nav-bar/nav-bar";
+import './global.scss'
+import ReduxProvider from "@/redux/redux-provider";
+import ModuleHeaderWrapper from "@/themes/components/module-header-wrapper/module-header-wrapper";
 
-
-export default function HomeLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-      <div className="home-layout">
-        <NavBar/>
-        <div className="home-main">
-          <ModuleHeaderWrapper/>
-          <div className="home-content">
-            {children}
-          </div>
-        </div>
-      </div>
+      <>
+      <ReduxProvider>
+        <NavBar />
+        <ModuleHeaderWrapper />
+        {children}
+      </ReduxProvider>
+      </>
   );
 }
