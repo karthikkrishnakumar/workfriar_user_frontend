@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./dashboard-notifications.module.scss";
-import { Notification } from "@/module/dashboard/services/dashboard-services/dashboard-services";
+import { Notification } from "@/modules/dashboard/services/dashboard-services/dashboard-services";
 
 interface NotificationProps {
   notifications: Notification[] | [];
@@ -23,7 +23,7 @@ const DashboardNotifications: React.FC<NotificationProps> = ({
             <div className={styles.notificationContent}>
               <div className={styles.notificationMessage}>
                 {notification.message.length > 35
-                  ? `${notification.message.slice(0, 35)}...`
+                  ? `${notification.message}`
                   : notification.message}
               </div>
             </div>

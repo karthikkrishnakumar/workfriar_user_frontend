@@ -6,7 +6,7 @@ import Icons from "@/themes/images/icons/icons"; // Icons import
 import DropDownModal from "../drop-down-modal/drop-down-modal";
 import { useRouter } from "next/navigation"; // Use useRouter from next/navigation
 import { ProfileNavigationClass } from "@/utils/navigation-util/profile-navigation-router"; // Import the ProfileNavigationClass
-import LogoutModal from "@/themes/components/logout-modal/logout-modal";
+import LogoutModal from "@/modules/dashboard/components/logout-modal/logout-modal";
 
 interface ProfilePreviewProps {
   avatarSrc?: string; // Source for the avatar image (optional)

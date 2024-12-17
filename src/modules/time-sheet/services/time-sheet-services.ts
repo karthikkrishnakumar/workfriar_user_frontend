@@ -1,4 +1,4 @@
-import { DatePickerData } from "@/module/dashboard/services/timesheet-due-services/timesheet-due-services";
+import { DatePickerData } from "@/modules/dashboard/services/timesheet-due-services/timesheet-due-services";
 import { dateStringToMonthDate, enGBFormattter, toISODateFormatter } from "@/utils/date-formatter-util/date-formatter";
 import axios from "axios";
 

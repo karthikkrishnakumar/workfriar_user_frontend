@@ -1,4 +1,4 @@
-import { TimeEntry, TimesheetDataTable, WeekDaysData } from "@/module/time-sheet/services/time-sheet-services";
+import { TimeEntry, TimesheetDataTable, WeekDaysData } from "@/modules/time-sheet/services/time-sheet-services";
 
 export const timeToMinutes = (time: string): number => {
     const [hours, minutes] = time.split(":").map((unit) => parseInt(unit, 10));

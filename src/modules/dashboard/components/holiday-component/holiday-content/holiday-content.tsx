@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "./holiday-content.module.scss";
 import Icons from "@/themes/images/icons/icons";
-import { Holidays } from "@/module/dashboard/services/dashboard-services/dashboard-services";
+import { Holidays } from "@/modules/dashboard/services/dashboard-services/dashboard-services";
 
 interface HolidayProps {
   holidays:Holidays[];
