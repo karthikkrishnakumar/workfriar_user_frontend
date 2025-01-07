@@ -1,5 +1,5 @@
+import LoginView from "@/modules/auth/views/page";
 
-import LoginView from "@/modules/login/views/page";
 
 export default function page () {
   return (
