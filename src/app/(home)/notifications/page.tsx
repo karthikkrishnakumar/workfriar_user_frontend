@@ -1,4 +1,4 @@
-import NotificationView from '@/modules/notifications/views'
+import NotificationView from '@/module/notifications/views/notification-view'
 import React from 'react'
 
 const page = () => {

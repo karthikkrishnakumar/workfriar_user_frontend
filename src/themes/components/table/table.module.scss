@@ -9,6 +9,23 @@
     .ant-table {
       border-collapse: separate;
 
+      &.skeletonMode {
+        .ant-table-tbody > tr {
+          height: 80px; // Set a specific height for skeleton rows
+        }
+
+        .ant-table-tbody > tr > td {
+          background-color: var(--skeleton-background-color);
+          padding: 16px;
+
+          .ant-skeleton-title {
+            margin: 0 !important;
+            height: 96px; // Adjust skeleton cell height
+            width: 100%; // Ensure skeleton fills the cell
+          }
+        }
+      }
+
       .ant-table-container {
         border-radius: 12px;
         display: flex;
@@ -33,8 +50,10 @@
       .ant-table-body {
         background-color: var( --container-color);
         border-radius: 12px;
-        scrollbar-width: thin; // For Firefox
+        overflow-y: auto;
         scrollbar-color: rgba(0,0,0,0.2) rgba(0,0,0,0.1); // For Firefox
+
+        overflow-y: overlay !important;
 
         &::-webkit-scrollbar {
           width: 8px; // Vertical scrollbar width
@@ -77,15 +96,16 @@
       color: var(--primary-font-color-dark);
       font-weight: var(--default-font-weight);
       font-size: var(--heading-3-size);
+      
 
-      // border-right: 1px solid black; 
-      // border-left: 1px solid black; 
 
     }
 
     .ant-table-empty .ant-table-tbody > tr.ant-table-placeholder {
       color: rgba(0, 0, 0, 0.25);
     }
+
+
 
     @media (max-width: 768px) {
       .ant-table-thead > tr > th,
@@ -96,3 +116,14 @@
   }
 }
 
+.ant-table-cell-scrollbar {
+  display: none !important;
+}
+
+.skeletonCell {
+  :global(.ant-skeleton-title) {
+    margin: 0 !important;
+    height: 24px;
+    padding: 24px;
+  }
+}

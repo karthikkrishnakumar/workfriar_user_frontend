@@ -1,0 +1,121 @@
+.statusGauge {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+
+  .gaugeContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .chartWrapper {
+      width: 100% !important;
+      height: 100% !important;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 18px;
+
+      .halfDonutChart {
+        max-width: 196px;
+        max-height: 98px;
+      }
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 44px;
+      padding: 0 0px;
+      max-width: 266px;
+      gap: 20px;
+
+      .statItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+
+        .label {
+          font-size: 14px;
+          color: #666;
+        }
+
+        .valueWrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 5px 10px;
+          border-radius: 5px;
+          border-width: 2px;
+          border-style: solid;
+
+          .value {
+            font-size: 24px;
+            font-weight: bold;
+          }
+
+          &.saved {
+            border-color: var(--primary-golden-color-light);
+          }
+
+          &.approved {
+            border-color: var(--primary-golden-color-medium);
+          }
+
+          &.rejected {
+            border-color: var(--primary-golden-color-dark);
+          }
+        }
+
+        &.saved .value {
+          color: var(--black);
+        }
+
+        &.approved .value {
+          color: var(--black);
+        }
+
+        &.rejected .value {
+          color: var(--black);
+        }
+      }
+    }
+
+    .saved,
+    .approved,
+    .rejected {
+      border-left: 2px solid;
+      padding-left: 4px;
+      &.saved {
+        border-color: var(--primary-golden-color-light);
+      }
+      &.approved {
+        border-color: var(--primary-golden-color-medium);
+      }
+      &.rejected {
+        border-color: var(--primary-golden-color-dark);
+      }
+    }
+  }
+}
+
+.emptyWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; // Adjust as per container size
+  text-align: center;
+}
+
+
+@media (max-width:868px){
+  .stats {
+ 
+    gap: 30px;
+    }
+ }

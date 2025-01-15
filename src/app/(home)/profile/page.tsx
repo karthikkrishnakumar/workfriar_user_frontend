@@ -1,4 +1,4 @@
-import ProfileView from "@/modules/profile/views/page";
+import ProfileView from "@/module/profile/views/page";
 
 export default function page() {
   return <ProfileView />;
