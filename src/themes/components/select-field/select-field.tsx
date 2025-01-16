@@ -4,16 +4,15 @@ import styles from "./select-field.module.scss"; // Import the SCSS module
 
 const { Option } = Select;
 
-// Update the interface to accept boolean as well
 interface SelectOption {
   label: string;
-  value: string | number | boolean; // Updated type to allow boolean
+  value: string | number | boolean;
 }
 
 interface CustomSelectProps {
   options: SelectOption[];
-  value: string | number | boolean | undefined; // Updated to accept boolean as well
-  onChange: (value: string | number | boolean) => void; // Updated to accept boolean as well
+  value: string | number | boolean | undefined;
+  onChange: (value: string | number | boolean) => void;
   placeholder?: string;
 }
 
@@ -25,13 +24,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 }) => {
   return (
     <div className={styles.customSelectContainer}>
-      {" "}
-      {/* Apply container class */}
       <Select
-        value={value}
+        value={value !== undefined ? value : null} // Ensure false is not treated as undefined
         onChange={onChange}
         placeholder={placeholder}
-        className={styles.customSelect} // Apply select styling
+        className={styles.customSelect}
+        allowClear // Optional: Allows clearing the selection
       >
         {options.map((option) => (
           <Option key={option.value.toString()} value={option.value}>

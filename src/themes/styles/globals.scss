@@ -72,7 +72,7 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: var( --page-background);
   font-family: var(--font-rubik);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -101,4 +101,9 @@ a {
     @media(max-width:1200px){
       padding-left: 80px !important;
     }
+}
+
+/* Override Ant Design spinner styles globally */
+:where(.ant-spin-dot-holder) {
+  color: var(--primary-golden-color-medium) !important; /* Yellow spinner dots */
 }

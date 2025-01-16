@@ -1,0 +1,75 @@
+.holidayCard {
+  width: 100%;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  height: 140px;
+  overflow: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  .arrowButton {
+    width: 24px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    outline: none;
+    border: 0;
+  }
+
+  .holidaysDetialsDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 10px;
+    gap: 0px;
+  }
+
+  .holidayTitle {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--primary-golden-color-dark);
+    margin-bottom: 10px;
+  }
+
+  .holidayDate {
+    font-size: 14px;
+    background-color: var(--primary-golden-color-medium);
+    color: var(--black);
+    padding: 10px 12px;
+    max-width: fit-content;
+    border-radius: 20px;
+    line-height: 19px;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+.emptyWrapper .ant-empty-image > svg g ellipse {
+  fill: gold !important; /* Change ellipse color */
+}
+.emptyWrapper .ant-empty-image > svg g g path:nth-of-type(1) {
+  fill: goldenrod !important; /* Change the first path color */
+}
+.emptyWrapper .ant-empty-image > svg g g path:nth-of-type(2) {
+  fill: darkgoldenrod !important; /* Change the second path color */
+}
+
+@media (max-width:868px){
+  .arrowButton {
+    width: 4px;
+  }
+  .holidayTitle {
+    font-size: 14px;
+  }
+  .holidayDate {
+    font-size: 8px;
+    padding: 4px 5px;
+    
+  }
+}

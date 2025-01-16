@@ -11,7 +11,7 @@ interface TeamAvatarProps {
 }
 
 
-const AvatarGroup: React.FC<TeamAvatarProps> = ({ team }) => {
+const AvatarGroup: React.FC<TeamAvatarProps> = ({ team = [] }) => {
   return (
     <Avatar.Group
           size="large"

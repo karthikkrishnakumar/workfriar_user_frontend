@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "@/themes/styles/globals.scss";
+import "../themes/styles/globals.scss";
 
 const geistSans = localFont({
   src: "../themes/fonts/Rubik.ttf",
@@ -8,9 +8,13 @@ const geistSans = localFont({
   weight: "100 900",
 });
 
+
 export const metadata: Metadata = {
   title: "Workfriar",
-  description: "Track Time, Boost Productivity, Simplify Workflows.",
+  description: "",
+  icons: {
+    icon: './favicon.ico',
+  },
 };
 
 export default function RootLayout({

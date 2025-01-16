@@ -1,86 +1,115 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./date-picker.module.scss";
+import {
+  formatDate,
+  formatYear,
+  findCurrentWeek,
+  getDisabledWeeks,
+  getWeekDates,
+} from "@/utils/datepicker-util/datepicker-formater-routes";
 import Icons from "@/themes/images/icons/icons";
-import { formatDate ,formatYear } from "@/utils/datepicker-util/datepicker-formater-routes";
+import SkeletonLoader from "../skeleton-loader/skeleton-loader";
+
+export interface DatePickerData {
+  startDate: string; // Start date in string format
+  endDate: string; // End date in string format
+  week: number; // Week number
+  label: string; // Label associated with the date range
+}
 
 interface DateRangePickerProps {
-  range: string; // The range in "YYYY-MM-DD-YYYY-MM-DD" format
-  onDateChange: (data: {
-    startDate: string;
-    endDate: string;
-    prev: boolean;
-    next: boolean;
-  }) => void;
-  isPrev?: boolean; // True if the previous button should be disabled
-  isNext?: boolean; // True if the next button should be disabled
+  weekData: DatePickerData[] | null | undefined;
+  onDateChange: (startDate: string, endDate: string) => void;
+  dateChangeType?: "all" | "pastDue";
 }
 
 const DateRangePicker: React.FC<DateRangePickerProps> = ({
-  range,
+  weekData,
   onDateChange,
-  isPrev=false,
-  isNext=false,
+  dateChangeType = "all",
 }) => {
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [endDate, setEndDate] = useState<string | null>(null);
+  const [currentWeek, setCurrentWeek] = useState<number | null>(
+    dateChangeType === "pastDue" && weekData
+      ? 0
+      : Math.floor((weekData?.length ?? 0) / 2)
+  );
+  const [disabledWeeks, setDisabledWeeks] = useState<boolean[]>([]);
 
-  // Parse and set the initial range
   useEffect(() => {
-    const rangePattern = /^\d{4}-\d{2}-\d{2}-\d{4}-\d{2}-\d{2}$/;
+    if (!weekData || weekData.length === 0) return;
 
-    if (!rangePattern.test(range)) {
-      console.error("Invalid range format. Expected 'YYYY-MM-DD-YYYY-MM-DD'");
-      return;
+    const current = findCurrentWeek(weekData);
+    setCurrentWeek(current);
+
+    const disabled = getDisabledWeeks(weekData, dateChangeType);
+    setDisabledWeeks(disabled || []);
+
+    const weekDates = getWeekDates(weekData, current);
+    if (weekDates?.startDate && weekDates?.endDate) {
+      onDateChange(weekDates.startDate, weekDates.endDate);
     }
+  }, [weekData]);
 
-    const parts = range.split("-");
-    const start = parts.slice(0, 3).join("-"); // First part of the range
-    const end = parts.slice(3, 6).join("-"); // Second part of the range
+  const handleWeekChange = (offset: number) => {
+    if (currentWeek === null || !weekData) return;
 
-    setStartDate(start);
-    setEndDate(end);
-  }, [range]);
-
-  // Handle navigation (Previous or Next)
-  const handleNavigation = (isPrev: boolean) => {
-    if (startDate && endDate) {
-      onDateChange({
-        startDate,
-        endDate,
-        prev: isPrev,
-        next: !isPrev,
-      });
+    const newWeek = currentWeek + offset;
+    if (newWeek >= 0 && newWeek < weekData.length) {
+      setCurrentWeek(newWeek);
+      const weekDates = getWeekDates(weekData, newWeek);
+      if (weekDates?.startDate && weekDates?.endDate) {
+        onDateChange(weekDates.startDate, weekDates.endDate);
+      }
     }
   };
 
+  if (currentWeek === null) {
+    return <div className={styles.nullState}>No data available</div>;
+  }
+
+  const weekDates = getWeekDates(weekData, currentWeek);
+
+  if (!weekDates?.startDate || !weekDates?.endDate) {
+    return <div className={styles.nullState}> </div>;
+  }
+
+  const { startDate, endDate } = weekDates;
+
+  if (!weekData || weekData.length === 0) {
+    return (
+      <div>
+        <SkeletonLoader
+          count={1}
+          button={true}
+          className={styles.customSkeleton}
+          classNameItem={styles.customSkeletonItem}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.dateRangePicker}>
-      {/* Previous Week Button */}
       <button
-        onClick={() => handleNavigation(true)} // Previous
-        className={styles.navigationButtonLeft}
-        disabled={isPrev} // Disable if isPrev is true
+        onClick={() => handleWeekChange(-1)}
+        className={`${styles.navigationButtonLeft} ${
+          currentWeek === 0 ? styles.disabled : ""
+        }`}
+        disabled={currentWeek === 0}
       >
         {Icons.arrowLeftGrey}
       </button>
 
-      {/* Display the Date Range */}
       <div className={styles.weekDisplay}>
-        {startDate && endDate ? (
-          <>
-            {formatDate(startDate)} - {formatDate(endDate)},{" "}
-            {formatYear(endDate)}
-          </>
-        ) : (
-          "Loading..."
-        )}
+        {formatDate(startDate)} - {formatDate(endDate)}, {formatYear(endDate)}
       </div>
 
-      {/* Next Week Button */}
       <button
-        onClick={() => handleNavigation(false)} // Next
-        className={styles.navigationButtonRight}
-        disabled={isNext} // Disable if isNext is true
+        onClick={() => handleWeekChange(1)}
+        className={`${styles.navigationButtonRight} ${
+          disabledWeeks[currentWeek + 1] ? styles.disabled : ""
+        }`}
+        disabled={disabledWeeks[currentWeek + 1]}
       >
         {Icons.arrowRightGrey}
       </button>

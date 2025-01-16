@@ -1,4 +1,4 @@
-import Holidays from '@/modules/holidays/views/holidays'
+import Holidays from '@/module/holidays/views/holidays'
 import React from 'react'
 
 export default function page() {

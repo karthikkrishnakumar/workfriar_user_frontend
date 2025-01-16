@@ -1,4 +1,4 @@
-import TImesheetViews from "@/modules/time-sheet/views/timesheet-view";
+import TImesheetViews from "@/module/time-sheet/views/timesheet-view";
 
 export default function page() {
   return <TImesheetViews />;

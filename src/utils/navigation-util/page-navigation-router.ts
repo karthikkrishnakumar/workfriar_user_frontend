@@ -10,13 +10,13 @@ interface NavigationLinks {
 
 export class NavBarNavigationClass {
     public navigationLinks: NavigationLinks[] = [
-      { path: "/dashboard", label: "DashBoard", defaultIcon: "dashboardOutline", activeIcon: "dashboardFilled", collapsible: false },
-      { path: "/time-sheet", label: "TimeSheet", defaultIcon: "timeSheetOutline", activeIcon: "timeSheetFilled", collapsible: false },
+      { path: "/dashboard", label: "Dashboard", defaultIcon: "dashboardOutline", activeIcon: "dashboardFilled", collapsible: false },
+      { path: "/time-sheet", label: "Timesheet", defaultIcon: "timeSheetOutline", activeIcon: "timeSheetFilled", collapsible: true },
     ];
   
     // Function to get the active status of the link based on the current pathname
     public getActiveStatus(path: string, pathname: string): boolean {
-      return pathname === path; // Returns true if the current pathname matches the path
+      return pathname.startsWith(path);
     }
   
     /**

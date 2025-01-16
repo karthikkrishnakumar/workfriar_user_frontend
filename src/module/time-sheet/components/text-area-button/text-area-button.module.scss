@@ -1,0 +1,91 @@
+.textAreaButtonWrapper {
+    border: 1px solid var(--navigation-arrow);
+    background-color: transparent;
+    padding: 8px;
+    font-size: var(--default-font-size);
+    font-weight: var(--default-font-weight);
+    width: 155px;
+    height: 56px;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+
+    .buttonValue {
+        width: 100px;
+        white-space: normal;
+        word-wrap: break-word;
+        text-align: left;
+        line-height: 20px;
+        flex: 1;
+        display: -webkit-box;
+        /* Enable the line-clamp feature */
+        -webkit-line-clamp: 2;
+        /* Number of lines to display */
+        -webkit-box-orient: vertical;
+        /* Set the box orientation for line clamping */
+        overflow: hidden;
+        /* Hide overflowing text */
+        text-overflow: ellipsis;
+        height: 100%;
+    }
+
+    .editIcon {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+    }
+}
+
+
+.textAreaModal {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  width: max-content !important;
+}
+
+.textArea {
+  resize: none;
+  outline: none;
+  border: .5px solid var(--navigation-arrow);
+  border-radius: 5px;
+  padding: 12px;
+  font-size: var(--default-font-size);
+  font-weight: var(--default-font-weight);
+  font-family: var(--font-rubik);
+  width: 546px;
+  height: 148px;
+}
+
+.actionButtons {
+  margin-bottom: 20px;
+  right: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  width: 100%;
+  height: max-content;
+  padding-right: 7px;
+}
+
+
+.textAreaWrapper{
+  display: flex;
+  flex-direction: column;
+
+  p {
+    width: 100%;
+    max-width: 546px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    font-weight: var(--default-font-weight);
+    font-family: var(--font-rubik);
+    margin-top: 12px;
+    color: var(--secondary-font-color-dark);
+  }
+}
+

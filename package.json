@@ -1,5 +1,5 @@
 {
-  "name": "workfriar_user_frontend",
+  "name": "workfriar_admin_frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "stage": "next start -p 5002"
+    "stage": "next start -p 5001"
   },
   "dependencies": {
     "@ant-design/charts": "2.2.3",
@@ -20,7 +20,7 @@
     "cookie": "1.0.2",
     "date-fns": "4.1.0",
     "dayjs": "1.11.13",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "9.0.2",
     "moment": "2.30.1",
     "next": "14.2.5",
     "react": "19.0.0-rc-66855b96-20241106",
@@ -34,9 +34,11 @@
     "scss": "0.2.4"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.7",
+    "@types/jsonwebtoken": "9.0.7",
+    "@types/lodash": "4.17.13",
     "@types/node": "20",
     "@types/react": "18",
+    "@types/react-date-range": "1.4.9",
     "@types/react-dom": "18",
     "eslint": "8",
     "eslint-config-next": "15.0.3",
