@@ -5,9 +5,10 @@ import { Button, message, Spin } from "antd";
 import ProfileCard from "@/themes/components/profile-card/profile-card";
 import EditProjectModal from "../edit-profile-modal/edit-profile-modal";
 import useProfileService, { ProfileData } from "../../services/profile-service";
+import CustomAvatar from "@/themes/components/avatar/avatar";
 
 const Profile = () => {
-  const { getAdminDetails, updateAdminDetails } = useProfileService();
+  const { getUserDetails, updateUserDetails } = useProfileService();
 
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -18,8 +19,9 @@ const Profile = () => {
    */
   const handleEditProfileSubmit = async (values: Record<string, any>) => {
     try {
-      const response = await updateAdminDetails(values);
+      const response = await updateUserDetails(values);
     } catch (err) {
+      message.error("Failed.");
     }
     setIsEditModalOpen(false); // Close modal after submission
   };
@@ -27,14 +29,12 @@ const Profile = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-       
-        const response = await getAdminDetails();
+        const response = await getUserDetails();
         if (response.status) {
-          setProfile(
-            {...response.data,
-            reporting_manager: response.data.reporting_manager.full_name}
-          );
-          console.log(profile);
+          setProfile({
+            ...response.data,
+            reporting_manager: response.data.reporting_manager.full_name,
+          });
         } else {
           message.error(response.message);
         }
@@ -42,10 +42,9 @@ const Profile = () => {
         message.error("Failed to fetch project details.");
       }
     };
-  
+
     fetchDetails(); // Call the function inside useEffect
   }, []); // Ensure dependencies are correctly passed
-  
 
   if (!profile) {
     return (
@@ -60,20 +59,14 @@ const Profile = () => {
       <div className={styles.topRow}>
         <div className={styles.imageUploadContainer}>
           <div className={styles.imageCircle}>
-            {profile?.profile_pic_path ? (
-              <img
-                src={profile?.profile_pic_path}
-                alt="Profile"
-                className={styles.image}
-              />
-            ) : (
-              <span className={styles.imageInitial}>
-                {profile?.name[0].toUpperCase()}
-              </span>
-            )}
+            <CustomAvatar
+              src={profile?.profile_pic_path}
+              name={profile?.name}
+              size={100}
+            />
           </div>
         </div>
-        <Button onClick={() => setIsEditModalOpen(true)}>Edit profile</Button>
+        {/* <Button onClick={() => setIsEditModalOpen(true)}>Edit profile</Button> */}
       </div>
       <ProfileCard
         initialValues={profile || {}}
