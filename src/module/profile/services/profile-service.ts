@@ -26,7 +26,7 @@ export default function useProfileService() {
   const getAdminDetails = async function (): Promise<any> {
     try {
       // Make an HTTP POST request
-      const { body } = await http().post("/api/admin/profile-view");
+      const { body } = await http().post("/api/user/profile-view");
       console.log(body);
       if (body.status) {
         const response: any = {

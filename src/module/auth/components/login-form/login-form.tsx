@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./login-form.module.scss";
-import ButtonComponent from "@/themes/components/button/button";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuthService } from "../../services/auth-service/auth-service";
 import { Spin } from "antd";
 import Icons from "@/themes/images/icons/icons";
+import ButtonComponent from "@/themes/components/button/button";
 
 
 const LoginForm = () => {
