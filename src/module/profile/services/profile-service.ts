@@ -13,21 +13,20 @@ export interface ProfileData {
   location: string;
   phone: string;
   role: string;
-  reporting_manager:{
-    _id:string;
-    full_name:string;
-  } 
+  reporting_manager: {
+    _id: string;
+    full_name: string;
+  };
 }
 
 /**
  * create the custom hook for handling admin profile
  */
 export default function useProfileService() {
-  const getAdminDetails = async function (): Promise<any> {
+  const getUserDetails = async function (): Promise<any> {
     try {
       // Make an HTTP POST request
-      const { body } = await http().post("/api/admin/profile-view");
-      console.log(body);
+      const { body } = await http().post("/api/user/profile-view");
       if (body.status) {
         const response: any = {
           status: body.status,
@@ -50,7 +49,7 @@ export default function useProfileService() {
     }
   };
 
-  const updateAdminDetails = async function (payload: any): Promise<any> {
+  const updateUserDetails = async function (payload: any): Promise<any> {
     const props: JSON = <JSON>(<unknown>{
       payload,
     });
@@ -80,8 +79,7 @@ export default function useProfileService() {
   };
 
   return {
-    getAdminDetails,
-    updateAdminDetails,
+    getUserDetails,
+    updateUserDetails,
   };
 }
-
