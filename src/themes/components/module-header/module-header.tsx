@@ -30,7 +30,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
   actionButton,
   isBackButtonNeeded,
 }) => {
-  const { getAdminDetails } = useProfileService();
+  const { getUserDetails } = useProfileService();
   const [avatarData, setAvatarData] = useState<AvatarData | null>(null);
   const router = useRouter();
 
@@ -39,7 +39,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
 
   const fetchAvatarData = useCallback(async () => {
     try {
-      const response = await getAdminDetails();
+      const response = await getUserDetails();
       if (response.status) {
         setAvatarData({
           name: response.data.name,
@@ -52,7 +52,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
         profile_pic_path: "/dynamic-samples-images/profile.svg",
       });
     }
-  }, [getAdminDetails]);
+  }, [getUserDetails]);
 
   useEffect(() => {
     fetchAvatarData();
